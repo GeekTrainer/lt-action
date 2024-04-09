@@ -1,0 +1,18 @@
+name: LT Update
+
+on:
+  issue_comment:
+    types: [created]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: LT Update
+        uses: actions/github-script@v5
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script-file: .github/scripts/lt-update.js
