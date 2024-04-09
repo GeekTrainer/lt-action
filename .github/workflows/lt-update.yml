@@ -11,8 +11,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: LT Update
-        uses: actions/github-script@v5
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script-file: .github/scripts/lt-update.js
+          node-version: '14'
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: .github/scripts
+
+      - name: LT Update
+        run: node lt-update.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: .github/scripts
